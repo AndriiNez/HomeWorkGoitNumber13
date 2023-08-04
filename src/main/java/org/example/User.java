@@ -8,7 +8,7 @@ public class User {
     private String username;
     private String email;
     private Address address;
-    private String pfone;
+    private String phone;
     private String website;
     private Company company;
 
@@ -52,12 +52,12 @@ public class User {
         this.address = address;
     }
 
-    public String getPfone() {
-        return pfone;
+    public String getPhone() {
+        return phone;
     }
 
-    public void setPfone(String pfone) {
-        this.pfone = pfone;
+    public void setPhone(String phone) {
+        this.phone = phone;
     }
 
     public String getWebsite() {
@@ -81,12 +81,12 @@ public class User {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         User user = (User) o;
-        return id == user.id && Objects.equals(name, user.name) && Objects.equals(username, user.username) && Objects.equals(email, user.email) && Objects.equals(address, user.address) && Objects.equals(pfone, user.pfone) && Objects.equals(website, user.website) && Objects.equals(company, user.company);
+        return id == user.id && Objects.equals(name, user.name) && Objects.equals(username, user.username) && Objects.equals(email, user.email) && Objects.equals(address, user.address) && Objects.equals(phone, user.phone) && Objects.equals(website, user.website) && Objects.equals(company, user.company);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, name, username, email, address, pfone, website, company);
+        return Objects.hash(id, name, username, email, address, phone, website, company);
     }
 
     @Override
@@ -97,7 +97,7 @@ public class User {
                 ", username='" + username + '\'' +
                 ", email='" + email + '\'' +
                 ", address=" + address +
-                ", pfone='" + pfone + '\'' +
+                ", phone='" + phone + '\'' +
                 ", website='" + website + '\'' +
                 ", company=" + company +
                 '}';
@@ -105,7 +105,7 @@ public class User {
     }
 
     public class Address {
-        private String streat;
+        private String street;
         private String suite;
         private String city;
         private String zipcode;
@@ -116,18 +116,18 @@ public class User {
             if (this == o) return true;
             if (o == null || getClass() != o.getClass()) return false;
             Address address = (Address) o;
-            return Objects.equals(streat, address.streat) && Objects.equals(suite, address.suite) && Objects.equals(city, address.city) && Objects.equals(zipcode, address.zipcode) && Objects.equals(geo, address.geo);
+            return Objects.equals(street, address.street) && Objects.equals(suite, address.suite) && Objects.equals(city, address.city) && Objects.equals(zipcode, address.zipcode) && Objects.equals(geo, address.geo);
         }
 
         @Override
         public int hashCode() {
-            return Objects.hash(streat, suite, city, zipcode, geo);
+            return Objects.hash(street, suite, city, zipcode, geo);
         }
 
         @Override
         public String toString() {
             return "Address{" +
-                    "streat='" + streat + '\'' +
+                    "street='" + street + '\'' +
                     ", suite='" + suite + '\'' +
                     ", city='" + city + '\'' +
                     ", zipcode='" + zipcode + '\'' +
@@ -136,11 +136,11 @@ public class User {
         }
 
         public String getStreat() {
-            return streat;
+            return street;
         }
 
-        public void setStreat(String streat) {
-            this.streat = streat;
+        public void setStreet(String street) {
+            this.street = street;
         }
 
         public String getSuite() {

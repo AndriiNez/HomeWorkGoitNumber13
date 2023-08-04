@@ -91,7 +91,7 @@ public class HttpApp {
     }
 
     //Task 2
-    public static List<Comments> getComment(URI uri, URI uri1) throws IOException, InterruptedException {
+    public static List<Post> getPost(URI uri) throws IOException, InterruptedException {
         HttpRequest postsRequest = HttpRequest.newBuilder()
                 .uri(uri)
                 .GET()
@@ -99,54 +99,30 @@ public class HttpApp {
         HttpResponse<String> postsResponse = CLIENT.send(postsRequest, HttpResponse.BodyHandlers.ofString());
         List<Post> posts = GSON.fromJson(postsResponse.body(), new TypeToken<List<Post>>() {
         }.getType());
-        if (posts.isEmpty()) {
-            throw new RuntimeException("No posts found for the given user.");
-        }
+        return posts;
+    }
 
-        Post lastPost = posts.stream()
-                .max(Comparator.comparingInt(Post::getId))
-                .orElseThrow(RuntimeException::new);
-
+    public static List<Comments> getComment(URI uri) throws IOException, InterruptedException {
         HttpRequest commentsRequest = HttpRequest.newBuilder()
-                .uri(uri1)
+                .uri(uri)
                 .GET()
                 .build();
         HttpResponse<String> commentsResponse = CLIENT.send(commentsRequest, HttpResponse.BodyHandlers.ofString());
         List<Comments> comments = GSON.fromJson(commentsResponse.body(), new TypeToken<List<Comments>>() {
         }.getType());
-
-        Comments lastComment = comments.stream()
-                .max(Comparator.comparingInt(Comments::getId))
-                .orElseThrow(RuntimeException::new);
-
-        int lastId = Math.max(lastPost.getId(), lastComment.getId());
-
-        String fileName;
-        if (lastPost.getId() > lastComment.getId()) {
-            fileName = String.format("./textFolder/user-%d-post-%d-comments.json", lastPost.getUserId(), lastId);
-            File file = new File(fileName);
-            checkIfFileAvaileble(file);
-            Gson gson = new GsonBuilder().setPrettyPrinting().create();
-            String json = gson.toJson(posts);
-            try (FileWriter writer = new FileWriter(file)) {
-                writer.write(json);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        } else {
-            fileName = String.format("./textFolder/user-%d-post-%d-comments.json", lastComment.getPostId(), lastId);
-            File file = new File(fileName);
-            checkIfFileAvaileble(file);
-            Gson gson = new GsonBuilder().setPrettyPrinting().create();
-            String json = gson.toJson(comments);
-            try (FileWriter writer = new FileWriter(file)) {
-                writer.write(json);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
-
         return comments;
+    }
+
+    public static void creatFile(List<?> data, String fileName) {
+        File file = new File(fileName);
+        checkIfFileAvaileble(file);
+        Gson gson = new GsonBuilder().setPrettyPrinting().create();
+        String json = gson.toJson(data);
+        try (FileWriter writer = new FileWriter(file)) {
+            writer.write(json);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
 
